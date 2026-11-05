@@ -1,0 +1,56 @@
+{
+ "doi_thu": "Hang A",
+ "ngay_chup": "2026-01-01",
+ "nguon": [
+  {
+   "page_id": "1",
+   "page": "Hang A - Trang chinh",
+   "url": "",
+   "tong_theo_meta": 7
+  }
+ ],
+ "ads": [
+  {
+   "nguon": "page:1",
+   "hang": 1,
+   "id": "101",
+   "nhom_id": "n101",
+   "page": "Hang A - Trang chinh",
+   "page_id": "1",
+   "follow": 1000,
+   "so_ban": 2,
+   "ban_khac_chu": 1,
+   "so_lan_len": 2,
+   "bat_dau": "2025-09-01",
+   "lan_len_cuoi": "2025-12-01",
+   "tuoi_ngay": 122,
+   "dinh_dang": "VIDEO",
+   "so_the": 0,
+   "nen_tang": "FI",
+   "cta": "MESSAGE_PAGE",
+   "link": null,
+   "chu": "Noi dung mau"
+  },
+  {
+   "nguon": "page:1",
+   "hang": 2,
+   "id": "199",
+   "nhom_id": "n199",
+   "page": "Hang A - Trang chinh",
+   "page_id": "1",
+   "follow": 1000,
+   "so_ban": 1,
+   "ban_khac_chu": 1,
+   "so_lan_len": 1,
+   "bat_dau": "2025-12-25",
+   "lan_len_cuoi": "2025-12-25",
+   "tuoi_ngay": 7,
+   "dinh_dang": "VIDEO",
+   "so_the": 0,
+   "nen_tang": "FI",
+   "cta": "MESSAGE_PAGE",
+   "link": null,
+   "chu": "Test bo som"
+  }
+ ]
+}
