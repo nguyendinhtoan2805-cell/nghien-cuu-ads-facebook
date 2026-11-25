@@ -1,5 +1,12 @@
 # Thay đổi
 
+## 3.2 · 25/11/2026
+
+- **Dùng được với ChatGPT và Codex.** SKILL.md có bước chọn chế độ: **tự động** (AI điều khiển trình duyệt) hoặc **tay** (người dùng chạy script trong Chrome, AI phân tích). Hướng dẫn chế độ tay mới: `references/che-do-tay.md`.
+- `thu-thap.js`: thêm `__soiAdsBanChup`, `__soiAdsLuu` (tải bản chụp về máy thành file JSON đúng định dạng), `__soiAdsLuuChiTiet`, và dòng tiến độ trong Console. Bài kiểm mới `tests/thu-thap.test.mjs` giả lập trang Thư viện.
+- `thong-ke.py` tự **gộp các file cùng đối thủ, cùng ngày** (chạy tay mỗi fanpage một file; tải trùng không nhân đôi).
+- Lệnh cài: `--codex` (cài vào `~/.agents/skills`), `--zip-chatgpt` (tạo zip để tải lên ChatGPT).
+
 ## 3.1 · 25/11/2026
 
 - **Đối chứng phải chạy ≥14 ngày** (`TUOI_DOI_CHUNG` trong `thong-ke.py`): ads vài ngày tuổi chưa kịp leo hạng nên không còn bị chọn làm đối chứng. Tài liệu thêm mục **Lệch tuổi** (đối chứng trẻ hơn ads thắng nhiều thì hạ mức chắc) và **Đối chiếu chéo giữa các đối thủ** trước khi rút nguyên lý.

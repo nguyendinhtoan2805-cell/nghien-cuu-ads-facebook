@@ -48,9 +48,28 @@ def doc(thu_muc, loc):
             r = re.compile(loc, re.I)
             d["ads"] = [a for a in d.get("ads", []) if r.search(a.get("chu") or "")]
         theo_dt[d["doi_thu"]].append(d)
-    for ds in theo_dt.values():
-        ds.sort(key=lambda x: x["ngay_chup"])
+    for dt, ds in theo_dt.items():
+        theo_dt[dt] = gop_cung_ngay(ds)
     return theo_dt
+
+
+def gop_cung_ngay(ds):
+    """Gộp các file cùng đối thủ, cùng ngày chụp thành một bản (chạy tay: mỗi fanpage một file).
+    Dòng ads khoá theo (nguồn, id): cùng nhóm ở hai fanpage thì giữ cả hai vì hạng tính riêng; tải trùng file thì không nhân đôi."""
+    gop = {}
+    for d in ds:
+        g = gop.setdefault(d["ngay_chup"], {**d, "nguon": [], "ads": [], "_khoa_ads": set(), "_khoa_nguon": set()})
+        for n in d.get("nguon", []):
+            k = n.get("page_id") or n.get("url") or n.get("page")
+            if k not in g["_khoa_nguon"]:
+                g["_khoa_nguon"].add(k); g["nguon"].append(n)
+        for a in d.get("ads", []):
+            k = (a.get("nguon"), a.get("id"))
+            if k not in g["_khoa_ads"]:
+                g["_khoa_ads"].add(k); g["ads"].append(a)
+    for g in gop.values():
+        del g["_khoa_ads"], g["_khoa_nguon"]
+    return [gop[k] for k in sorted(gop)]
 
 
 def khoa(a):

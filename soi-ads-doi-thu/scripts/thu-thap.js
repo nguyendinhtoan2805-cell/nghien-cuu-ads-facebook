@@ -1,12 +1,17 @@
 // Thu thập ads từ Thư viện quảng cáo Meta (facebook.com/ads/library).
-// Dán TOÀN BỘ file này vào javascript_tool trên một trang Thư viện vừa tải xong, TRƯỚC KHI cuộn.
+// Chạy TOÀN BỘ file này trên một trang Thư viện vừa tải xong, TRƯỚC KHI cuộn:
+//   - AI có công cụ chạy JavaScript trong tab (chế độ tự động): dán vào công cụ đó.
+//   - Người chạy tay (chế độ tay, xem references/che-do-tay.md): F12 → Console → dán → Enter.
 // Chạy lại không sao: dữ liệu đã lấy được giữ nguyên tới khi tải lại trang.
 //
 // Hàm có sẵn sau khi chạy:
 //   await __soiAdsThem(url)        → lấy trang đầu (≤30 nhóm) của URL khác mà không chuyển trang
 //   __soiAdsTomTat()               → tiến độ theo từng nguồn: tổng Meta ghi, đã lấy, còn trang sau không
 //   __soiAdsDong(tu, so)           → mảng dòng gọn để lưu bản chụp (mọi nguồn, hạng tính riêng từng nguồn)
+//   __soiAdsBanChup("tên đối thủ") → nguyên bản chụp đúng định dạng thong-ke.py (mọi nhóm đã lấy)
+//   __soiAdsLuu("tên đối thủ")     → tải bản chụp về máy thành file YYYY-MM-DD-<ten-doi-thu>.json
 //   __soiAdsChiTiet([id, ...])     → chữ đầy đủ mọi bản + link video/ảnh/thẻ
+//   __soiAdsLuuChiTiet([id, ...])  → tải phần chi tiết trên về máy thành file JSON
 // Nguồn nào `con_trang_sau: true` thì mở chính URL đó, chạy lại file này và cuộn chuột thật.
 (async () => {
   const S = (window.__soiAds = window.__soiAds || { nhom: [], daThay: {}, nguon: {}, hook: false });
@@ -47,6 +52,7 @@
       } catch (err) { /* không phải JSON hợp lệ, bỏ qua */ }
       p = e + 1;
     }
+    if (N.da) console.log(`[soi ads] ${nguon}: đã lấy ${N.da} nhóm` + (N.conTrang ? ' · còn trang sau: cuộn xuống tiếp' : ' · HẾT trang: gõ __soiAdsLuu("tên đối thủ") để tải file'));
   }
 
   if (!S.hook) {
@@ -108,6 +114,43 @@
     };
   });
 
+  const ngayVN = () => new Date().toLocaleDateString('sv-SE', { timeZone: 'Asia/Ho_Chi_Minh' });
+  const gioVN = () => new Date().toLocaleTimeString('sv-SE', { timeZone: 'Asia/Ho_Chi_Minh' }).slice(0, 5);
+  const slug = (t) => String(t).normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/đ/gi, 'd').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '') || 'doi-thu';
+  const taiVe = (ten, duLieu) => {
+    const url = URL.createObjectURL(new Blob([JSON.stringify(duLieu, null, 1)], { type: 'application/json' }));
+    const a = document.createElement('a');
+    a.href = url; a.download = ten;
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+    setTimeout(() => URL.revokeObjectURL(url), 5000);
+  };
+
+  // Bản chụp đủ định dạng thong-ke.py. Nguồn từ khoá (q:...) giữ nguyên, page_id để trống.
+  window.__soiAdsBanChup = (doiThu) => {
+    const ads = window.__soiAdsDong(0, S.nhom.length);
+    const nguon = Object.entries(S.nguon).map(([k, N]) => {
+      const pid = k.startsWith('page:') ? k.slice(5) : '';
+      const mot = ads.find((a) => a.nguon === k);
+      return {
+        page_id: pid, page: mot ? mot.page : k,
+        url: pid ? `https://www.facebook.com/ads/library/?active_status=active&ad_type=all&country=VN&media_type=all&search_type=page&view_all_page_id=${pid}` : '',
+        tong_theo_meta: N.tong, con_trang_sau: N.conTrang,
+      };
+    });
+    return { doi_thu: doiThu, ngay_chup: ngayVN(), gio_chup: gioVN(), nguon, ads };
+  };
+
+  window.__soiAdsLuu = (doiThu) => {
+    if (!doiThu) throw new Error('Ghi tên đối thủ, ví dụ __soiAdsLuu("Hãng A")');
+    const b = window.__soiAdsBanChup(doiThu);
+    const ten = `${b.ngay_chup}-${slug(doiThu)}.json`;
+    taiVe(ten, b);
+    const kq = { file: ten, so_nhom: b.ads.length, nguon: b.nguon.map((n) => `${n.page}: ${n.con_trang_sau ? 'CÒN trang sau' : 'đủ'}`) };
+    if (b.nguon.some((n) => n.con_trang_sau)) kq.canh_bao = 'Có nguồn chưa cuộn hết trang: số nhóm thiếu. Cuộn tiếp rồi lưu lại nếu được.';
+    console.log('[soi ads] đã tải ' + ten + ' · ' + b.ads.length + ' nhóm' + (kq.canh_bao ? ' · ⚠️ ' + kq.canh_bao : ''));
+    return kq;
+  };
+
   // Một nhóm có thể nằm ở nhiều nguồn (fanpage + từ khoá): gộp theo nhóm, giữ bản có nhiều biến thể nhất.
   const nhomTheoId = (ids) => {
     const gap = {};
@@ -132,6 +175,14 @@
       the: (sn.cards || []).map((c) => ({ tieu_de: c.title, chu: c.body, anh: c.original_image_url || c.resized_image_url, video: c.video_hd_url || c.video_sd_url, link: c.link_url })),
     };
   }));
+
+  window.__soiAdsLuuChiTiet = (ids, ten) => {
+    const d = window.__soiAdsChiTiet(ids);
+    const f = ten || `${ngayVN()}-chi-tiet-${ids.length}-ads.json`;
+    taiVe(f, d);
+    console.log('[soi ads] đã tải ' + f + ' · ' + d.length + ' nhóm');
+    return { file: f, so_nhom: d.length };
+  };
 
   return window.__soiAdsTomTat();
 })();

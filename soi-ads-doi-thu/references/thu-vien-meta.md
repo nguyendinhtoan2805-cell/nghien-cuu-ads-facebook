@@ -2,6 +2,8 @@
 
 Kiểm thử thật ngày 03/11/2026 trên facebook.com/ads/library, quốc gia Việt Nam, trong trình duyệt tích hợp đã đăng nhập Facebook. Giao diện Meta đổi thì kiểm lại file này trước.
 
+Tên công cụ trong file này (`javascript_tool`, `computer`, `browser_batch`, `preview_start`) là của Claude. AI khác dùng công cụ tương đương của mình: chạy JavaScript trong tab, cuộn chuột, chụp màn hình. Không có công cụ trình duyệt thì dùng [`che-do-tay.md`](che-do-tay.md).
+
 ## 1. URL
 
 | Việc | URL |
@@ -28,7 +30,7 @@ Tìm theo từ khoá khớp mọi ads có chữ đó: lẫn đại lý, shop bá
 2. Dán toàn bộ nội dung `scripts/thu-thap.js` vào `javascript_tool` **trước khi cuộn**. Script tự đọc trang đầu từ HTML và cài bộ bắt các trang tải thêm.
 3. Cuộn bằng **chuột thật**: `computer` → `scroll` xuống 10 nấc, `wait` 2 giây, lặp lại. `window.scrollTo` bằng JS **không** làm Meta tải thêm. Gộp 5–6 lượt cuộn vào một `browser_batch`, cuối batch gọi `__soiAdsTomTat()`.
 4. Xong khi `con_trang_sau` là `false`. `tong_theo_meta` là số làm tròn ("~130") và có tính cả bản biến thể, nên `da_lay_nhom` nhỏ hơn là bình thường.
-5. Xuất: `__soiAdsDong(0,50)`, `__soiAdsDong(50,50)`… Ghép thành bản chụp (định dạng ở `scripts/thong-ke.py`).
+5. Xuất: `__soiAdsDong(0,50)`, `__soiAdsDong(50,50)`… Ghép thành bản chụp (định dạng ở `scripts/thong-ke.py`). Hoặc `__soiAdsBanChup("<đối thủ>")` trả nguyên bản chụp, `__soiAdsLuu("<đối thủ>")` tải thành file.
 
 Mỗi fanpage là một lần tải trang. Trang mới thì phải chạy lại script, vì biến lưu trong trang mất khi chuyển URL.
 

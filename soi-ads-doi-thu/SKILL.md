@@ -5,11 +5,20 @@ description: Soi quảng cáo Facebook của đối thủ qua Thư viện quản
 
 # Soi ads đối thủ
 
-**Phiên bản** 3.1 · 25/11/2026 · Chỉ Facebook / Instagram (Thư viện quảng cáo Meta).
+**Phiên bản** 3.2 · 25/11/2026 · Chỉ Facebook / Instagram (Thư viện quảng cáo Meta) · Dùng được với Claude, ChatGPT, Codex.
 
 Skill này là **quy trình chung**. Đối thủ, nơi lưu và luật nội dung của từng thương hiệu nằm trong **hồ sơ theo dõi** của dự án, không nằm trong skill.
 
 Thư viện **không có chi tiêu hay lượt hiển thị** ở Việt Nam. Độ mạnh được **suy từ tín hiệu** ([`references/do-manh.md`](references/do-manh.md)). "Vì sao chạy tốt" được trả lời bằng **đối chứng**: so ads thắng với ads yếu của chính đối thủ đó ([`references/giai-ma-ads-thang.md`](references/giai-ma-ads-thang.md)).
+
+## Chọn chế độ (trước Bước 0)
+
+| Chế độ | Khi nào | Bước 1–2 và 4 làm thế nào |
+|---|---|---|
+| **Tự động** | Bạn chạy được JavaScript trong một tab trình duyệt **và** cuộn chuột thật trong tab đó (ví dụ Claude in Chrome, trình duyệt tích hợp của app Claude, MCP Playwright) | Tự làm theo [`references/thu-vien-meta.md`](references/thu-vien-meta.md) |
+| **Tay** | Không có công cụ đó (ChatGPT, Codex không có trình duyệt, Claude trên web) | Dẫn người dùng tự chạy script trong Chrome của họ theo [`references/che-do-tay.md`](references/che-do-tay.md), họ gửi lại file |
+
+Không chắc thì hỏi người dùng một câu. Đừng giả vờ đã mở Thư viện khi không có trình duyệt. Thống kê (Bước 3), phân tích (Bước 5), báo cáo (Bước 6) giống nhau ở cả hai chế độ.
 
 ## Bước 0: Mở hồ sơ theo dõi
 
@@ -28,9 +37,9 @@ Mọi thao tác Thư viện làm theo [`references/thu-vien-meta.md`](references
 
 ## Bước 2: Thu thập và lưu bản chụp
 
-Với từng fanpage: mở URL theo `page_id`, chạy [`scripts/thu-thap.js`](scripts/thu-thap.js), cuộn chuột thật tới khi `con_trang_sau` là `false`, rồi xuất `__soiAdsDong` theo lô 50.
+Với từng fanpage: mở URL theo `page_id`, chạy [`scripts/thu-thap.js`](scripts/thu-thap.js), cuộn chuột thật tới khi `con_trang_sau` là `false`, rồi xuất `__soiAdsDong` theo lô 50 (hoặc `__soiAdsBanChup("<đối thủ>")` lấy nguyên bản chụp). Chế độ tay: người dùng gõ `__soiAdsLuu("<đối thủ>")`, mỗi fanpage ra một file.
 
-Ghi **một file mỗi đối thủ** vào thư mục dữ liệu: `YYYY-MM-DD-<doi-thu>.json`, định dạng ở đầu [`scripts/thong-ke.py`](scripts/thong-ke.py). Gộp các fanpage chính của đối thủ vào cùng file, `hang` giữ theo từng fanpage. Trang vệ tinh chỉ đưa vào khi hồ sơ ghi cần.
+Ghi **một file mỗi đối thủ** vào thư mục dữ liệu: `YYYY-MM-DD-<doi-thu>.json`, định dạng ở đầu [`scripts/thong-ke.py`](scripts/thong-ke.py). Gộp các fanpage chính của đối thủ vào cùng file, `hang` giữ theo từng fanpage (nhiều file cùng đối thủ, cùng ngày cũng được: `thong-ke.py` tự gộp). Trang vệ tinh chỉ đưa vào khi hồ sơ ghi cần.
 
 **Xong khi:** mọi fanpage đều có `con_trang_sau: false`, và số dòng trong file bằng tổng `da_lay_nhom`.
 
@@ -46,7 +55,7 @@ Dùng `--loc` khi hồ sơ ghi lọc chữ (fanpage bán nhiều ngành). Script
 
 ## Bước 4: Xem media
 
-Chạy [`scripts/xem-media.js`](scripts/xem-media.js) trong tab Thư viện, sau khi đã lưu bản chụp. Chọn ads theo [`references/phan-tich-noi-dung.md`](references/phan-tich-noi-dung.md) mục 1.
+Chạy [`scripts/xem-media.js`](scripts/xem-media.js) trong tab Thư viện, sau khi đã lưu bản chụp. Chế độ tay: làm theo `che-do-tay.md` mục 4 (người dùng chụp màn hình gửi lại). Chọn ads theo [`references/phan-tich-noi-dung.md`](references/phan-tich-noi-dung.md) mục 1.
 
 - **Ads thắng:** dải khung mỗi 2 giây hết video, mọi thẻ ảnh, chữ đầy đủ mọi bản.
 - **Đối chứng và ads tiêu biểu:** 4 mốc (0,3s · 3s · 50% · cuối) và chữ đầy đủ.

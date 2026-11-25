@@ -92,5 +92,34 @@ class ChayCaScript(unittest.TestCase):
         self.assertNotIn("`201`", self.out.split("**Ads thắng và đối chứng**")[1].split("**So với")[0])
 
 
+class GopFileCungNgay(unittest.TestCase):
+    """Chạy tay: mỗi fanpage tải một file. Cùng đối thủ, cùng ngày phải gộp thành MỘT bản chụp."""
+
+    def test_gop_hai_fanpage(self):
+        import json, tempfile
+        d = Path(tempfile.mkdtemp())
+        mot = lambda pid, ids: {"doi_thu": "Hang B", "ngay_chup": "2026-02-01",
+                                "nguon": [{"page_id": pid, "page": "Trang " + pid, "url": "", "tong_theo_meta": len(ids)}],
+                                "ads": [{**ads(id=str(i), nhom_id="n" + str(i), hang=k + 1), "nguon": "page:" + pid,
+                                         "page": "Trang " + pid, "page_id": pid} for k, i in enumerate(ids)]}
+        (d / "2026-02-01-hang-b.json").write_text(json.dumps(mot("1", [1, 2, 3])), encoding="utf-8")
+        (d / "2026-02-01-hang-b (1).json").write_text(json.dumps(mot("2", [4, 5, 3])), encoding="utf-8")
+        ban = tk.doc(str(d), None)["Hang B"]
+        self.assertEqual(len(ban), 1)
+        self.assertEqual(len(ban[0]["nguon"]), 2)
+        # nhóm 3 xuất hiện ở cả 2 trang: giữ cả 2 dòng vì hạng tính riêng từng trang
+        self.assertEqual(sorted(a["id"] for a in ban[0]["ads"]), ["1", "2", "3", "3", "4", "5"])
+
+    def test_tai_trung_file_khong_nhan_doi(self):
+        import json, tempfile
+        d = Path(tempfile.mkdtemp())
+        b = {"doi_thu": "Hang C", "ngay_chup": "2026-02-01", "nguon": [{"page_id": "9", "page": "P", "url": "", "tong_theo_meta": 1}],
+             "ads": [{**ads(id="7"), "nguon": "page:9", "page": "P", "page_id": "9"}]}
+        for ten in ("2026-02-01-hang-c.json", "2026-02-01-hang-c (1).json"):
+            (d / ten).write_text(json.dumps(b), encoding="utf-8")
+        ban = tk.doc(str(d), None)["Hang C"]
+        self.assertEqual((len(ban), len(ban[0]["ads"]), len(ban[0]["nguon"])), (1, 1, 1))
+
+
 if __name__ == "__main__":
     unittest.main()

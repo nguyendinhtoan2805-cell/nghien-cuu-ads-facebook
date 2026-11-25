@@ -1,8 +1,8 @@
-# Nghiên cứu ads Facebook: skill soi ads đối thủ cho Claude
+# Nghiên cứu ads Facebook: skill soi ads đối thủ cho Claude, ChatGPT, Codex
 
-Skill cho **Claude** soi quảng cáo Facebook, Instagram của đối thủ qua [Thư viện quảng cáo Meta](https://www.facebook.com/ads/library/). Phiên bản: xem `PHIEN-BAN.txt`.
+Skill (chuẩn Agent Skills) soi quảng cáo Facebook, Instagram của đối thủ qua [Thư viện quảng cáo Meta](https://www.facebook.com/ads/library/). Phiên bản: xem `PHIEN-BAN.txt`.
 
-Mỗi lần chạy, Claude:
+Mỗi lần chạy, AI:
 
 1. **Thu thập** mọi ads đang chạy theo từng fanpage và lưu bản chụp, để lần sau so được đối thủ đổi gì.
 2. **Ước lượng độ mạnh** khi không có số chi tiêu: thứ hạng hiển thị, nhịp ra ads, ads bền, ads thắng được nhân bản sang chiến dịch mới.
@@ -23,7 +23,7 @@ Skill là **quy trình chung**, không chứa dữ liệu thương hiệu nào. 
 | **uv** | Chạy lệnh cài (tự lo Python) | [docs.astral.sh/uv](https://docs.astral.sh/uv/getting-started/installation/) |
 | Tài khoản Facebook | Thư viện xem được đủ ads khi đã đăng nhập | |
 
-Claude trên web (claude.ai) hay ChatGPT **không chạy được** skill này, vì skill cần điều khiển trình duyệt và chạy script trên máy.
+Dùng ChatGPT hoặc Codex thì xem mục **[Dùng với ChatGPT hoặc Codex](#dùng-với-chatgpt-hoặc-codex)**.
 
 ### Từng bước (lần đầu)
 
@@ -65,6 +65,28 @@ Tải zip bản mới, giải nén đè lên thư mục cũ (hoặc `git pull`),
 | Thư viện chỉ hiện vài ads, đòi đăng nhập | Đăng nhập Facebook trong đúng trình duyệt Claude đang dùng |
 | Bóc lời thoại chậm lần đầu | Lần đầu tải mô hình nghe (~0,5 GB). Claude sẽ hỏi trước |
 
+## Dùng với ChatGPT hoặc Codex
+
+| | Claude bản máy tính | ChatGPT | Codex |
+|---|---|---|---|
+| Thu thập ads | **Tự động**: AI mở Thư viện, cuộn, lấy hết | **Tay**: bạn dán script vào Console của Chrome, cuộn, tải file JSON, gửi ChatGPT. AI dẫn từng bước | Tay (như ChatGPT), hoặc tự động nếu Codex có công cụ trình duyệt |
+| Thống kê, giải mã, báo cáo | ✅ | ✅ | ✅ |
+| Xem video, ảnh | AI tự xem | Bạn chụp màn hình theo mốc AI đưa | Như ChatGPT |
+| Bóc lời thoại | ✅ (khi cho phép tải) | ❌ ghi "chưa nghe lời" | ✅ |
+
+Chế độ tay chậm hơn nhưng dữ liệu y hệt (thứ hạng, ngày lên, số bản), nên thống kê và giải mã vẫn đủ căn cứ. Hướng dẫn đầy đủ: `soi-ads-doi-thu/references/che-do-tay.md`.
+
+**ChatGPT**
+
+1. Vào mục **Releases**, tải file `soi-ads-doi-thu-skill.zip` (chỉ có skill, gọn để tải lên).
+2. Trong ChatGPT mở mục **Skills**, tải file zip lên.
+3. Nên tạo một **Project** cho việc soi ads, đưa hồ sơ theo dõi và các file bản chụp cũ (`du-lieu/*.json`) vào project.
+4. Gõ `@soi-ads-doi-thu` rồi yêu cầu, ví dụ *"soi ads đối thủ A"*. ChatGPT sẽ dẫn bạn lấy dữ liệu trong Chrome.
+
+**Codex** (trên máy): làm như bước Cài ở trên nhưng chạy `uv run cai-dat-skill.py --codex` (cài vào `~/.agents/skills`), rồi mở lại Codex, gọi bằng `$soi-ads-doi-thu`.
+
+Giao diện ChatGPT và Codex thay đổi nhanh: tên mục có thể khác chút.
+
 ## Dùng
 
 Nói với Claude trong dự án của bạn, ví dụ:
@@ -98,7 +120,8 @@ Nên đăng nhập Facebook trong trình duyệt Claude dùng. Claude sẽ hỏi
 
 ```bash
 python3 -I -m unittest discover -s tests
+node --test tests/thu-thap.test.mjs
 node --check soi-ads-doi-thu/scripts/thu-thap.js soi-ads-doi-thu/scripts/xem-media.js
 ```
 
-Ra bản mới: sửa `PHIEN-BAN.txt` và `CHANGELOG.md` → commit, push → `gh release create v<x>` kèm zip (`git archive -o nghien-cuu-ads-facebook-v<x>.zip HEAD`).
+Ra bản mới: sửa `PHIEN-BAN.txt`, `CHANGELOG.md` và dòng phiên bản trong `SKILL.md` → commit, push → `gh release create v<x>` kèm 2 file: `git archive -o nghien-cuu-ads-facebook-v<x>.zip HEAD` và `uv run cai-dat-skill.py --zip-chatgpt`.
