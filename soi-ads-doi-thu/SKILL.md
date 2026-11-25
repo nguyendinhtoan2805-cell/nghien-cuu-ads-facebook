@@ -5,7 +5,7 @@ description: Soi quảng cáo Facebook của đối thủ qua Thư viện quản
 
 # Soi ads đối thủ
 
-**Phiên bản** 3.2 · 25/11/2026 · Chỉ Facebook / Instagram (Thư viện quảng cáo Meta) · Dùng được với Claude, ChatGPT, Codex.
+**Phiên bản** 3.2.1 · 25/11/2026 · Chỉ Facebook / Instagram (Thư viện quảng cáo Meta) · Dùng được với Claude, ChatGPT, Codex.
 
 Skill này là **quy trình chung**. Đối thủ, nơi lưu và luật nội dung của từng thương hiệu nằm trong **hồ sơ theo dõi** của dự án, không nằm trong skill.
 
@@ -16,9 +16,12 @@ Thư viện **không có chi tiêu hay lượt hiển thị** ở Việt Nam. Đ
 | Chế độ | Khi nào | Bước 1–2 và 4 làm thế nào |
 |---|---|---|
 | **Tự động** | Bạn chạy được JavaScript trong một tab trình duyệt **và** cuộn chuột thật trong tab đó (ví dụ Claude in Chrome, trình duyệt tích hợp của app Claude, MCP Playwright) | Tự làm theo [`references/thu-vien-meta.md`](references/thu-vien-meta.md) |
+| **Bán tự động** | Bạn điều khiển được Chrome của người dùng (mở trang, cuộn, gõ) nhưng không có công cụ chạy JavaScript riêng, phải dán script vào Console (ví dụ ChatGPT bản máy tính có tích hợp Chrome) | Như tự động, nhưng dán `thu-thap.js` vào Console. Lần đầu Chrome chặn dán: nhờ người dùng **tự gõ** `allow pasting` trong Console của đúng tab đó (tắt bộ gõ tiếng Việt trước), xem `che-do-tay.md` mục 6 |
 | **Tay** | Không có công cụ đó (ChatGPT, Codex không có trình duyệt, Claude trên web) | Dẫn người dùng tự chạy script trong Chrome của họ theo [`references/che-do-tay.md`](references/che-do-tay.md), họ gửi lại file |
 
-Không chắc thì hỏi người dùng một câu. Đừng giả vờ đã mở Thư viện khi không có trình duyệt. Thống kê (Bước 3), phân tích (Bước 5), báo cáo (Bước 6) giống nhau ở cả hai chế độ.
+Không chắc thì hỏi người dùng một câu. Đừng giả vờ đã mở Thư viện khi không có trình duyệt.
+
+**Cấm thay script bằng mắt.** Không chạy được `thu-thap.js` thì **dừng, nói rõ lý do, hỏi người dùng**. Không đọc thẻ trên giao diện rồi báo số hay lưu thành bản chụp: đọc bằng mắt thiếu nhóm, thiếu ngày lên lại, sai số bản, và lần so sau sẽ báo nhầm "đối thủ tắt hàng loạt". Số đếm trên giao diện chỉ được nói kèm chữ "ước lượng, chưa chạy script". Thống kê (Bước 3), phân tích (Bước 5), báo cáo (Bước 6) giống nhau ở cả hai chế độ.
 
 ## Bước 0: Mở hồ sơ theo dõi
 
@@ -79,6 +82,6 @@ Theo mẫu ở `phan-tich-noi-dung.md` mục 4, lưu vào nơi ghi trong hồ s�
 
 ## Bước 7: Cập nhật hồ sơ
 
-Thêm một dòng vào lịch sử các lần chụp. Ghi fanpage mới tìm thấy, page đổi tên, ngưỡng cần chỉnh nếu thấy dải thật của ngành khác `do-manh.md`. Báo người dùng link báo cáo và 3 điều đáng chú ý nhất, trong đó có công thức ads thắng của đối thủ mạnh nhất.
+Thêm một dòng vào lịch sử các lần chụp, sửa `cap_nhat` ở đầu hồ sơ thành ngày chụp. Ghi fanpage mới tìm thấy, page đổi tên, ngưỡng cần chỉnh nếu thấy dải thật của ngành khác `do-manh.md`. Báo người dùng link báo cáo và 3 điều đáng chú ý nhất, trong đó có công thức ads thắng của đối thủ mạnh nhất.
 
 **Xong khi:** hồ sơ có dòng của lần chụp này.

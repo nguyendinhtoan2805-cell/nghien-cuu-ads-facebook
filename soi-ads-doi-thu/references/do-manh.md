@@ -12,7 +12,7 @@ Thư viện không có chi tiêu. Độ mạnh được **suy từ hành vi ch�
 | 4 | **Độ bền** | `tuoi_ngay` (tính từ bản lên sớm nhất), ads >90 ngày | Người chạy ads hiếm khi giữ ads lỗ hàng tháng. Ads bền mà **còn ở top hạng** là tín hiệu thắng mạnh. Ads bền nhưng không có gì mới là chạy treo, không phải mạnh |
 | 5 | **Nhân bản và test** | `so_ban`, `so_lan_len`, `lan_len_cuoi`, `ban_khac_chu` | Các bản trong một nhóm thường là **cùng nội dung lên lại** ở chiến dịch khác. Lên lại sau >14 ngày là **nhân bản ads thắng** sang chiến dịch hoặc tệp mới, tín hiệu dồn tiền mạnh nhất có được. Bản khác chữ là test thông điệp. Khác hình chỉ biết khi xem media: URL ảnh/video luôn khác nhau giữa các lần tải lên |
 | 6 | **Độ phủ nền tảng** | `nen_tang` | Chỉ F hoặc FM thường là ads tin nhắn, ngân sách gọn. FIAM là phân phối rộng, thường đi với ngân sách lớn hơn hoặc Advantage+ |
-| 7 | **Thay đổi giữa hai lần chụp** | `thong-ke.py` | Nhóm tắt sau ≤14 ngày là test rồi bỏ. Nhóm mới vào top hạng ngay là đang dồn tiền. Nhóm "mới" có ngày bắt đầu trước lần chụp trước là **ads cũ bật lại**; nhóm cũ tăng số bản là **thêm bản**. Hai việc này không làm tăng "ads mới 30 ngày" nhưng là đổ thêm tiền thật |
+| 7 | **Thay đổi giữa hai lần chụp** | `thong-ke.py` | Nhóm **chắc chắn** chỉ sống ≤14 ngày (tuổi lúc chụp trước + số ngày giữa hai lần chụp ≤14) là test rồi bỏ; hai lần chụp cách xa thì không biết nhóm tắt sớm hay muộn. Nhóm từng đứng top 3 mà nay tắt: tìm lý do (hết hàng, hết đợt sale, ads mỏi). Nhóm mới vào top hạng ngay là đang dồn tiền. Nhóm "mới" có ngày bắt đầu trước lần chụp trước là **ads cũ bật lại**; nhóm cũ tăng số bản là **thêm bản**. Hai việc này không làm tăng "ads mới 30 ngày" nhưng là đổ thêm tiền thật |
 
 ## 2. Ngưỡng khởi điểm
 
@@ -37,7 +37,7 @@ So giữa các đối thủ **trong cùng một lần chụp** có giá trị h�
 | Ads bền chiếm đa số · 0 lên ads trong 30 ngày | **Chạy treo**: ads cũ tự chạy, không ai làm mới. Kiểm thêm fanpage khác của họ trước khi kết luận ngân sách thấp |
 | Ít nhóm · ads cũ ở top hạng · gần như không có ads mới | **Tập trung tiền vào vài ads thắng**, duy trì |
 | Ít nhóm · ads cũ · hạng thấp · không có ads mới | Ngân sách thấp hoặc đang ngưng ngành hàng này |
-| Nhiều nhóm tắt sau ≤14 ngày | Test nhiều nhưng **chưa tìm ra ads thắng** |
+| Nhiều nhóm chắc chắn tắt sau ≤14 ngày | Test nhiều nhưng **chưa tìm ra ads thắng** |
 | Ads mới đồng loạt cùng một góc nội dung | Đang **đổi hướng thông điệp**, đáng theo dõi kỹ ở lần chụp sau |
 | Nhịp tăng vọt trước một mốc (mùa tựu trường, Tết, ngày sale) | Chạy theo mùa vụ. Đối chiếu lịch mùa vụ của dự án |
 | Bật lại hàng loạt ads cũ · thêm bản cho ads thắng · không có nội dung mới | **Tăng tốc bằng hàng đã thắng** trước một mốc bán. Chụp lại sau mốc để xem họ tắt gì, giữ gì |

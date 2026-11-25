@@ -150,6 +150,12 @@ def vai(a, so_nhom_trang, hom, treo=False):
     return None, None
 
 
+def tat_som(a, ngay_truoc, hom):
+    """Nhóm có ở lần chụp trước, nay đã tắt: chỉ CHẮC là tắt sớm (test rồi bỏ) khi nó sống tối đa ≤14 ngày,
+    tức tuổi lúc chụp trước + số ngày giữa hai lần chụp ≤ 14. Hai lần chụp cách xa thì không biết nó tắt lúc nào."""
+    return (a.get("tuoi_ngay") or 0) + (hom - ngay_truoc).days <= 14
+
+
 THU_TU_VAI = ["Thắng rõ", "Thắng", "Thắng (yếu)", "Đối chứng (đã tắt)", "Đối chứng"]
 
 
@@ -227,9 +233,10 @@ def main():
             v, ly_do = vai(a, so_trang[a.get("nguon") or a["page"]], hom, treo)
             if v:
                 dong.append((v, ly_do, a))
+        ngay_truoc = date.fromisoformat(truoc["ngay_chup"]) if truoc else None
         for a in ra:
-            if (a.get("tuoi_ngay") or 0) <= 14:
-                dong.append(("Đối chứng (đã tắt)", f"tắt sau ≤{a.get('tuoi_ngay')} ngày", a))
+            if tat_som(a, ngay_truoc, hom):
+                dong.append(("Đối chứng (đã tắt)", f"tắt sau ≤{(a.get('tuoi_ngay') or 0) + (hom - ngay_truoc).days} ngày", a))
         dong.sort(key=lambda x: (THU_TU_VAI.index(x[0]), x[2].get("hang") or 999))
 
         # Cụm cùng chữ: một nội dung có thể được tải lên thành nhiều nhóm (chiến dịch, tệp khác nhau).
@@ -286,8 +293,14 @@ def main():
             vao = moi_tinh
             s["bien_dong"] = (len(moi_tinh), len(bat_lai), len(them_ban), truoc["ngay_chup"])
             if ra:
-                ngan = [a for a in ra if (a.get("tuoi_ngay") or 0) <= 14]
-                print(f"- Đã tắt: {len(ra)} nhóm, trong đó {len(ngan)} nhóm sống ≤14 ngày lúc chụp trước (dấu hiệu test rồi bỏ)")
+                cach = (date.fromisoformat(hien["ngay_chup"]) - date.fromisoformat(truoc["ngay_chup"])).days
+                ngan = [a for a in ra if tat_som(a, date.fromisoformat(truoc["ngay_chup"]), date.fromisoformat(hien["ngay_chup"]))]
+                print(f"- Đã tắt: {len(ra)} nhóm, trong đó {len(ngan)} nhóm chắc chắn sống ≤14 ngày (dấu hiệu test rồi bỏ)"
+                      + (f". Hai lần chụp cách {cach} ngày nên các nhóm còn lại không biết tắt sớm hay muộn" if cach > 7 else ""))
+                top = sorted([a for a in ra if (a.get("hang") or 999) <= 3], key=lambda x: x.get("hang"))
+                if top:
+                    print("- **Từng đứng top 3 lần trước, nay đã tắt** (đọc kỹ: hết hàng, hết đợt sale, hay ads đã mỏi): "
+                          + " · ".join(f"`{a['id']}` hạng {a.get('hang')} · {(a.get('chu') or '')[:50]}" for a in top))
                 for a in ra[:8]:
                     print(f"  - `{a['id']}` · {a.get('bat_dau')} · {(a.get('chu') or '')[:60]}")
             if vao:

@@ -68,9 +68,11 @@ class ChayCaScript(unittest.TestCase):
         self.assertIn("**Ads thắng và đối chứng**", self.out)
         self.assertIn("| Thắng rõ | 1 |", self.out)
 
-    def test_nhom_tat_som_thanh_doi_chung(self):
-        self.assertIn("Đối chứng (đã tắt)", self.out)
-        self.assertIn("`199`", self.out)
+    def test_tat_giua_hai_lan_chup_xa_khong_lam_doi_chung(self):
+        # 199 mới 7 ngày tuổi ở lần chụp 01/01, nhưng hai lần chụp cách 30 ngày:
+        # có thể nó đã chạy tới 37 ngày rồi mới tắt, nên không biết là "test rồi bỏ".
+        bang_vai = self.out.split("**Ads thắng và đối chứng**")[1].split("**So với")[0]
+        self.assertNotIn("`199`", bang_vai)
 
     def test_so_lan_truoc(self):
         self.assertIn("**So với bản 2026-01-01:**", self.out)
@@ -90,6 +92,32 @@ class ChayCaScript(unittest.TestCase):
 
     def test_trang_it_nhom_khong_co_vai(self):
         self.assertNotIn("`201`", self.out.split("**Ads thắng và đối chứng**")[1].split("**So với")[0])
+
+
+class TatSom(unittest.TestCase):
+    """Nhóm biến mất giữa hai lần chụp: chỉ chắc là 'tắt sớm' khi tuổi lúc chụp trước + khoảng cách hai lần chụp ≤ 14 ngày."""
+
+    def test_hai_lan_chup_gan(self):
+        self.assertTrue(tk.tat_som(ads(tuoi_ngay=5), date(2026, 1, 24), HOM))
+
+    def test_hai_lan_chup_xa(self):
+        self.assertFalse(tk.tat_som(ads(tuoi_ngay=5), date(2026, 1, 1), HOM))
+
+    def test_chay_va_in(self):
+        import json, tempfile
+        d = Path(tempfile.mkdtemp())
+        dong = lambda i, hang, tuoi, bd: {**ads(id=i, nhom_id="n" + i, hang=hang, tuoi_ngay=tuoi, bat_dau=bd, lan_len_cuoi=bd),
+                                          "nguon": "page:1", "page": "P", "page_id": "1", "chu": "chu " + i}
+        ban = lambda ngay, ds: {"doi_thu": "Hang D", "ngay_chup": ngay, "nguon": [{"page_id": "1", "page": "P", "url": "", "tong_theo_meta": len(ds)}], "ads": ds}
+        truoc = [dong("1", 1, 3, "2026-01-21"), dong("2", 2, 40, "2025-12-15"), dong("3", 3, 200, "2025-07-08"), dong("4", 4, 200, "2025-07-08")]
+        (d / "2026-01-24-hang-d.json").write_text(json.dumps(ban("2026-01-24", truoc)), encoding="utf-8")
+        (d / "2026-01-31-hang-d.json").write_text(json.dumps(ban("2026-01-31", [dong("4", 1, 207, "2025-07-08")])), encoding="utf-8")
+        out = subprocess.run([sys.executable, "-I", str(SCRIPT), str(d)], capture_output=True, text=True, encoding="utf-8").stdout
+        bang_vai = out.split("**Ads thắng và đối chứng**")[1].split("**So với")[0]
+        self.assertIn("`1`", bang_vai)        # 3 ngày + 7 ngày giữa hai lần chụp: chắc chắn tắt sớm
+        self.assertNotIn("`2`", bang_vai)     # 40 ngày: không phải đối chứng
+        self.assertIn("Từng đứng top 3 lần trước, nay đã tắt", out)
+        self.assertIn("`3`", out.split("Từng đứng top 3 lần trước, nay đã tắt")[1])
 
 
 class GopFileCungNgay(unittest.TestCase):

@@ -11,7 +11,7 @@ Thư viện không có số đo hiệu quả. Câu "vì sao ads này chạy tố
 | **Thắng rõ** | Nhân bản (lên lại sau >14 ngày) **và** hạng ≤5 trong fanpage | cao |
 | **Thắng** | Bền >60 ngày và hạng ≤10 · hoặc nhân bản và hạng ≤15 · hoặc mới ≤30 ngày mà đã hạng ≤3 | vừa |
 | **Thắng (yếu)** | Như "Thắng" theo độ bền, nhưng đối thủ không lên ads nào trong 30 ngày (chạy treo): ads bền có thể chỉ là ads bị bỏ quên | thấp |
-| **Đối chứng** | Nửa dưới bảng hạng của fanpage, chỉ lên một lần, không nhân bản, **đã chạy ≥14 ngày** · hoặc nhóm đã tắt sau ≤14 ngày (thấy được khi có lần chụp trước) | |
+| **Đối chứng** | Nửa dưới bảng hạng của fanpage, chỉ lên một lần, không nhân bản, **đã chạy ≥14 ngày** · hoặc nhóm **chắc chắn** tắt sau ≤14 ngày: tuổi lúc chụp trước + số ngày giữa hai lần chụp ≤14 (hàm `tat_som()`). Muốn có loại đối chứng này thì chụp lại sau 5–7 ngày | |
 
 Ngưỡng hạng co theo cỡ fanpage: "hạng ≤10" và "hạng ≤3" không vượt quá 1/3 số nhóm của trang, "hạng ≤5" không vượt quá một nửa. Fanpage dưới 3 nhóm thì không xét vai.
 

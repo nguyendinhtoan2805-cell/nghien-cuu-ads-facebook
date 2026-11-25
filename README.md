@@ -67,12 +67,12 @@ Tải zip bản mới, giải nén đè lên thư mục cũ (hoặc `git pull`),
 
 ## Dùng với ChatGPT hoặc Codex
 
-| | Claude bản máy tính | ChatGPT | Codex |
-|---|---|---|---|
-| Thu thập ads | **Tự động**: AI mở Thư viện, cuộn, lấy hết | **Tay**: bạn dán script vào Console của Chrome, cuộn, tải file JSON, gửi ChatGPT. AI dẫn từng bước | Tay (như ChatGPT), hoặc tự động nếu Codex có công cụ trình duyệt |
-| Thống kê, giải mã, báo cáo | ✅ | ✅ | ✅ |
-| Xem video, ảnh | AI tự xem | Bạn chụp màn hình theo mốc AI đưa | Như ChatGPT |
-| Bóc lời thoại | ✅ (khi cho phép tải) | ❌ ghi "chưa nghe lời" | ✅ |
+| | Claude bản máy tính | ChatGPT bản máy tính có tích hợp Chrome | ChatGPT trên web | Codex |
+|---|---|---|---|---|
+| Thu thập ads | **Tự động**: AI mở Thư viện, cuộn, lấy hết | **Bán tự động**: AI tự mở, cuộn, dán script; bạn chỉ gõ `allow pasting` một lần trong Console | **Tay**: bạn dán script vào Console, cuộn, tải file JSON gửi ChatGPT. AI dẫn từng bước | Tay, hoặc tự động nếu Codex có công cụ trình duyệt |
+| Thống kê, giải mã, báo cáo | ✅ | ✅ (đã chạy thử 25/11/2026) | ✅ | ✅ |
+| Xem video, ảnh | AI tự xem | AI tự xem | Bạn chụp màn hình theo mốc AI đưa | Như ChatGPT web |
+| Bóc lời thoại | ✅ (khi cho phép tải) | Chưa thử | ❌ ghi "chưa nghe lời" | ✅ |
 
 Chế độ tay chậm hơn nhưng dữ liệu y hệt (thứ hạng, ngày lên, số bản), nên thống kê và giải mã vẫn đủ căn cứ. Hướng dẫn đầy đủ: `soi-ads-doi-thu/references/che-do-tay.md`.
 

@@ -1,5 +1,14 @@
 # Thay đổi
 
+## 3.2.1 · 25/11/2026
+
+Sửa sau lần chạy thử thật trên ChatGPT bản máy tính (tích hợp Chrome):
+
+- **Sửa lỗi "đối chứng đã tắt"**: trước đây nhóm biến mất giữa hai lần chụp bị coi là "test rồi bỏ" chỉ theo tuổi lúc chụp trước, quên khoảng cách hai lần chụp. Ads thắng hạng 1 chạy tiếp gần 3 tuần rồi mới tắt cũng bị xếp làm đối chứng. Nay dùng `tat_som()`: tuổi lúc chụp trước + số ngày giữa hai lần chụp ≤14.
+- Thống kê in thêm **"Từng đứng top 3 lần trước, nay đã tắt"**.
+- SKILL.md: **cấm thay `thu-thap.js` bằng đọc giao diện** rồi báo số; thêm chế độ **bán tự động** (AI điều khiển Chrome nhưng dán script qua Console); Bước 7 sửa cả `cap_nhat` của hồ sơ.
+- Chế độ tay: lưu ý tắt bộ gõ tiếng Việt khi gõ `allow pasting`. README tách ChatGPT bản máy tính (bán tự động) với ChatGPT web (tay).
+
 ## 3.2 · 25/11/2026
 
 - **Dùng được với ChatGPT và Codex.** SKILL.md có bước chọn chế độ: **tự động** (AI điều khiển trình duyệt) hoặc **tay** (người dùng chạy script trong Chrome, AI phân tích). Hướng dẫn chế độ tay mới: `references/che-do-tay.md`.

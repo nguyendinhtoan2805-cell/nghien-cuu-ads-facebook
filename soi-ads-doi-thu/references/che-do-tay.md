@@ -54,7 +54,7 @@ Sau khi thống kê chọn ra ads thắng và đối chứng:
 
 | Người dùng báo | Cách xử |
 |---|---|
-| Dán vào Console không được | Gõ tay `allow pasting` (hoặc `cho phép dán`) rồi dán lại |
+| Dán vào Console không được | Gõ tay `allow pasting` (hoặc `cho phép dán`) vào dòng có dấu `>` rồi Enter, sau đó dán lại. **Tắt bộ gõ tiếng Việt trước**: gõ Telex thì "allow" thành "allơ" và Chrome không nhận. Phải gõ trong Console của đúng tab đang thu thập |
 | `__soiAdsLuu is not defined` | Trang đã tải lại hoặc chưa dán script. Dán lại `thu-thap.js` |
 | Console báo `đã lấy` nhưng số không tăng khi cuộn | Cuộn bằng chuột hoặc phím Page Down; đợi 2–3 giây mỗi lần. Dán script **trước** khi cuộn, nếu lỡ cuộn trước thì tải lại trang và làm lại |
 | Không thấy file tải về | Xem thư mục Tải về (Downloads); Chrome có thể hỏi "cho phép tải nhiều file" ở thanh địa chỉ |
