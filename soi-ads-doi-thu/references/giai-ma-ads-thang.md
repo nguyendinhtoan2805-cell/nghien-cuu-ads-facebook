@@ -11,7 +11,7 @@ Thư viện không có số đo hiệu quả. Câu "vì sao ads này chạy tố
 | **Thắng rõ** | Nhân bản (lên lại sau >14 ngày) **và** hạng ≤5 trong fanpage | cao |
 | **Thắng** | Bền >60 ngày và hạng ≤10 · hoặc nhân bản và hạng ≤15 · hoặc mới ≤30 ngày mà đã hạng ≤3 | vừa |
 | **Thắng (yếu)** | Như "Thắng" theo độ bền, nhưng đối thủ không lên ads nào trong 30 ngày (chạy treo): ads bền có thể chỉ là ads bị bỏ quên | thấp |
-| **Đối chứng** | Nửa dưới bảng hạng của fanpage, chỉ lên một lần, không nhân bản · hoặc nhóm đã tắt sau ≤14 ngày (thấy được khi có lần chụp trước) | |
+| **Đối chứng** | Nửa dưới bảng hạng của fanpage, chỉ lên một lần, không nhân bản, **đã chạy ≥14 ngày** · hoặc nhóm đã tắt sau ≤14 ngày (thấy được khi có lần chụp trước) | |
 
 Ngưỡng hạng co theo cỡ fanpage: "hạng ≤10" và "hạng ≤3" không vượt quá 1/3 số nhóm của trang, "hạng ≤5" không vượt quá một nửa. Fanpage dưới 3 nhóm thì không xét vai.
 
@@ -21,6 +21,8 @@ Ghép cặp: mỗi ads thắng lấy 1–2 đối chứng **cùng sản phẩm h
 
 - Cả cụm là **một** nội dung: tính tổng số nhóm, tổng số bản, hạng tốt nhất. Một nội dung trải 4 nhóm là tín hiệu thắng dù từng nhóm hạng thấp.
 - Hạng chênh nhau trong cụm là do ngân sách, tệp nhắm, chiến dịch. **Không** dùng làm bằng chứng về nội dung.
+
+**Lệch tuổi:** ads vài ngày tuổi chưa kịp leo hạng, nên đứng cuối bảng chưa chắc là yếu. Script không chọn ads dưới 14 ngày làm đối chứng (`TUOI_DOI_CHUNG`). Nếu đối chứng còn lại vẫn trẻ hơn ads thắng rất nhiều (ví dụ 20 ngày so với 300 ngày), hạ mức chắc mọi giả thuyết của đối thủ đó một bậc và ghi vào mục Giới hạn của báo cáo. Đối thủ đang lên ads dồn dập (đa số nhóm dưới 30 ngày) thường không đủ đối chứng: chụp lại sau 2–3 tuần.
 
 Nhóm đã tắt không còn trong bộ lọc "đang chạy". Muốn xem lại thì mở `facebook.com/ads/library/?id=<id>`.
 
@@ -68,6 +70,8 @@ Mức chắc:
 - **thấp**: chỉ quan sát ads thắng, không có đối chứng
 
 Viết theo cách so sánh: "Ads được nhân bản 3 lần khác ads tắt sớm ở chỗ…". Ngân sách, tệp nhắm và mùa vụ có thể giải thích thay cho nội dung. Ghi rõ khi ads thắng cũng là ads ra đúng mùa cao điểm, hoặc là ads duy nhất của sản phẩm bán chạy nhất.
+
+**Đối chiếu chéo giữa các đối thủ:** giả thuyết rút từ một đối thủ phải soát với đối thủ khác trước khi thành nguyên lý. Đối thủ khác thắng mà **không** có yếu tố đó, hoặc có yếu tố đó ở cả ads thắng lẫn đối chứng, thì yếu tố đó không phải lý do: tìm điểm chung rộng hơn. Ví dụ "người dẫn nói trong 5 giây đầu" bị bác khi hãng thứ hai thắng mà không có người dẫn; điểm chung thật là "người dùng sản phẩm xuất hiện sớm". Khi sửa giả thuyết của lần trước, ghi rõ trong báo cáo mới.
 
 ## 5. Công thức của đối thủ
 

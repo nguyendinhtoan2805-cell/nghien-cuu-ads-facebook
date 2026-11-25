@@ -101,6 +101,9 @@ def la_nhan_ban(a):
     return bool(bd and cuoi and (cuoi - bd).days > 14)
 
 
+TUOI_DOI_CHUNG = 14  # ngày tối thiểu để một ads hạng thấp được làm đối chứng
+
+
 def vai(a, so_nhom_trang, hom, treo=False):
     """Vai của một nhóm ads: (vai, lý do) hoặc (None, None). Luật: references/giai-ma-ads-thang.md mục 1.
     treo=True khi đối thủ không lên ads nào trong 30 ngày: ads bền khi đó có thể chỉ là ads bị bỏ quên."""
@@ -122,8 +125,9 @@ def vai(a, so_nhom_trang, hom, treo=False):
         return "Thắng", f"nhân bản + hạng {hang}/{so_nhom_trang}"
     if bd and (hom - bd).days <= 30 and hang <= tren(3, 3):
         return "Thắng", f"mới {(hom - bd).days} ngày đã hạng {hang}/{so_nhom_trang}"
-    if hang > so_nhom_trang / 2 and (a.get("so_lan_len") or 1) <= 1 and not nb:
-        return "Đối chứng", f"hạng {hang}/{so_nhom_trang}, lên 1 lần"
+    # Đối chứng phải chạy đủ lâu để có cơ hội leo hạng: ads vài ngày tuổi đứng cuối chưa chắc là yếu (bài học lần chụp 06/11/2026).
+    if hang > so_nhom_trang / 2 and (a.get("so_lan_len") or 1) <= 1 and not nb and tuoi >= TUOI_DOI_CHUNG:
+        return "Đối chứng", f"hạng {hang}/{so_nhom_trang}, lên 1 lần, {tuoi} ngày"
     return None, None
 
 

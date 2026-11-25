@@ -49,6 +49,11 @@ class Vai(unittest.TestCase):
     def test_nua_duoi_len_mot_lan_la_doi_chung(self):
         self.assertEqual(tk.vai(ads(hang=8, bat_dau="2026-01-10", lan_len_cuoi="2026-01-10", tuoi_ngay=21), 10, HOM)[0], "Đối chứng")
 
+    def test_doi_chung_qua_non_khong_tinh(self):
+        # Ads mới lên vài ngày chưa kịp leo hạng: đứng cuối bảng không có nghĩa là yếu.
+        self.assertEqual(tk.vai(ads(hang=8, bat_dau="2026-01-25", lan_len_cuoi="2026-01-25", tuoi_ngay=6), 10, HOM), (None, None))
+        self.assertEqual(tk.vai(ads(hang=8, bat_dau="2026-01-17", lan_len_cuoi="2026-01-17", tuoi_ngay=14), 10, HOM)[0], "Đối chứng")
+
 
 class ChayCaScript(unittest.TestCase):
     @classmethod

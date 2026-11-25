@@ -5,7 +5,7 @@ description: Soi quảng cáo Facebook của đối thủ qua Thư viện quản
 
 # Soi ads đối thủ
 
-**Phiên bản** 3.0 · 05/11/2026 · Chỉ Facebook / Instagram (Thư viện quảng cáo Meta).
+**Phiên bản** 3.1 · 25/11/2026 · Chỉ Facebook / Instagram (Thư viện quảng cáo Meta).
 
 Skill này là **quy trình chung**. Đối thủ, nơi lưu và luật nội dung của từng thương hiệu nằm trong **hồ sơ theo dõi** của dự án, không nằm trong skill.
 

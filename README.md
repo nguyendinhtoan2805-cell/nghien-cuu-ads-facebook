@@ -14,17 +14,56 @@ Skill là **quy trình chung**, không chứa dữ liệu thương hiệu nào. 
 
 ## Cài
 
-Cần: app Claude (thẻ **Code**) hoặc Claude Code có trình duyệt (trình duyệt có sẵn trong app, hoặc Claude in Chrome), Python 3, và [uv](https://docs.astral.sh/uv/) nếu muốn bóc lời thoại.
+### Cần có
+
+| Thứ | Để làm gì | Lấy ở đâu |
+|---|---|---|
+| App **Claude** bản máy tính (thẻ **Code**) hoặc Claude Code | Chạy skill | [claude.ai/download](https://claude.ai/download) |
+| Trình duyệt cho Claude: trình duyệt có sẵn trong app, hoặc tiện ích **Claude in Chrome** | Mở Thư viện quảng cáo Meta | Có sẵn trong app · [Chrome Web Store](https://chromewebstore.google.com/) tìm "Claude" |
+| **uv** | Chạy lệnh cài (tự lo Python) | [docs.astral.sh/uv](https://docs.astral.sh/uv/getting-started/installation/) |
+| Tài khoản Facebook | Thư viện xem được đủ ads khi đã đăng nhập | |
+
+Claude trên web (claude.ai) hay ChatGPT **không chạy được** skill này, vì skill cần điều khiển trình duyệt và chạy script trên máy.
+
+### Từng bước (lần đầu)
+
+1. Cài app Claude, đăng nhập, mở thẻ **Code**.
+2. Cài uv. Mở **Terminal** (Mac) hoặc **PowerShell** (Windows), dán đúng một dòng:
+   - Mac: `curl -LsSf https://astral.sh/uv/install.sh | sh`
+   - Windows: `powershell -ExecutionPolicy ByPass -c "irm https://astral.sh/uv/install.ps1 | iex"`
+
+   Cài xong thì đóng cửa sổ, mở lại.
+3. Tải skill: vào mục **Releases** bên phải trang này, tải file `nghien-cuu-ads-facebook-v<x>.zip` ở bản mới nhất, giải nén vào chỗ dễ tìm (ví dụ thư mục Tài liệu).
+4. Cài: trong Terminal/PowerShell, gõ `cd ` (có dấu cách) rồi kéo thả thư mục vừa giải nén vào, Enter. Sau đó chạy:
+
+   ```bash
+   uv run cai-dat-skill.py
+   ```
+
+   Thấy dòng `XONG — đã cài 1 skill` là được.
+5. **Thoát hẳn app Claude rồi mở lại.**
+6. Tạo một thư mục dự án (ví dụ `Ads đối thủ`), mở thư mục đó trong thẻ Code. Đăng nhập Facebook trong trình duyệt Claude dùng.
+7. Gõ thử: *"Soi ads Facebook của đối thủ A"*. Lần đầu Claude sẽ hỏi để tạo **hồ sơ theo dõi** (đối thủ nào, lưu ở đâu, luật nội dung). Công ty đã có hồ sơ sẵn thì chép file đó vào thư mục dự án trước khi gõ.
+
+Biết dùng git thì thay bước 3 bằng:
 
 ```bash
 git clone https://github.com/nguyendinhtoan2805-cell/nghien-cuu-ads-facebook.git
 cd nghien-cuu-ads-facebook
-uv run cai-dat-skill.py
 ```
 
-Hoặc tải zip ở mục **Releases**, giải nén rồi chạy lệnh cuối. Cài xong thì **mở lại Claude**.
+### Nhận bản mới
 
-Nhận bản mới: `git pull` (hoặc giải nén zip mới đè lên) rồi chạy lại `uv run cai-dat-skill.py`.
+Tải zip bản mới, giải nén đè lên thư mục cũ (hoặc `git pull`), chạy lại `uv run cai-dat-skill.py`, rồi mở lại Claude. Hồ sơ và dữ liệu nằm trong thư mục dự án của bạn nên không bị mất.
+
+### Gặp lỗi
+
+| Lỗi | Cách xử |
+|---|---|
+| `uv: command not found` / `uv is not recognized` | Chưa mở lại Terminal sau khi cài uv. Đóng, mở lại |
+| Claude không nhận skill | Thoát hẳn app (Mac: Cmd+Q) rồi mở lại. Kiểm tra có thư mục `~/.claude/skills/soi-ads-doi-thu` |
+| Thư viện chỉ hiện vài ads, đòi đăng nhập | Đăng nhập Facebook trong đúng trình duyệt Claude đang dùng |
+| Bóc lời thoại chậm lần đầu | Lần đầu tải mô hình nghe (~0,5 GB). Claude sẽ hỏi trước |
 
 ## Dùng
 
@@ -51,6 +90,7 @@ Nên đăng nhập Facebook trong trình duyệt Claude dùng. Claude sẽ hỏi
 ## Giới hạn
 
 - Thư viện Meta không có chi tiêu, lượt hiển thị ở Việt Nam. Độ mạnh và "vì sao chạy tốt" là **suy luận có căn cứ**, luôn kèm mức chắc chắn, không phải số đo.
+- `boc-loi.py` (bóc lời thoại) **chưa chạy trên video thật**. Lần đầu dùng nên thử 1–2 video ngắn trước.
 - Ngưỡng Mạnh/Vừa/Nhẹ là ngưỡng khởi điểm cho SME Việt Nam (`NGUONG` trong `thong-ke.py`), nên chỉnh sau vài lần chụp.
 - Báo cáo về đối thủ là tài liệu nội bộ. Dùng để học nguyên lý, không chép chữ hay hình của họ.
 

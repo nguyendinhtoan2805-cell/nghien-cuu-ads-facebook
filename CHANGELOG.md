@@ -1,5 +1,10 @@
 # Thay đổi
 
+## 3.1 · 25/11/2026
+
+- **Đối chứng phải chạy ≥14 ngày** (`TUOI_DOI_CHUNG` trong `thong-ke.py`): ads vài ngày tuổi chưa kịp leo hạng nên không còn bị chọn làm đối chứng. Tài liệu thêm mục **Lệch tuổi** (đối chứng trẻ hơn ads thắng nhiều thì hạ mức chắc) và **Đối chiếu chéo giữa các đối thủ** trước khi rút nguyên lý.
+- README: hướng dẫn cài từng bước cho người mới (Mac, Windows), bảng lỗi hay gặp, cách nhận bản mới.
+
 ## 3.0 · 05/11/2026
 
 - **Giải mã ads thắng** (`references/giai-ma-ads-thang.md`): trả lời "vì sao ads của họ chạy tốt" bằng đối chứng với ads yếu cùng hãng, 10 lớp giải mã, giả thuyết kèm mức chắc, công thức của từng đối thủ, giả thuyết test cho mình.
